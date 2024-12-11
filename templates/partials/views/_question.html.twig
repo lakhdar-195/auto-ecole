@@ -1,0 +1,63 @@
+{% form_theme form 'tailwind_2_layout.html.twig' %}
+
+{{ form_start(form) }}
+<section class="bg-gray-white dark:bg-gray-700 pt-40 pb-60">
+    <div class=" flex flex-col items-center justify-start px-6 py-1 mx-auto md:h-screen lg:py-0">
+        <div class="lg:w-2/5 p-6 bg-white sm:w-full md:w-full  rounded shadow border  dark:bg-gray-700 border-gray-700 sm:p-8">
+
+            <div class="w-full text-center mb-5">
+                <h2 class=" text-xl font-bold leading-relaxed tracking-tight text-gray-700 md:text-2xl dark:text-white mb-4"> {{title}} </h2>
+                <p class="w-3/4 mx-auto leading-relaxed text-base text-gray-600">Personnalisez et mettez à jour les informations de votre profil afin de refléter les changements et de faciliter une expérience adaptée à vos besoins.</p>
+            </div>
+            
+            <form  class="mt-4 space-y-4 lg:mt-5 md:space-y-5" method="post">
+
+
+                <div class="mb-4">
+                    <div class="w-full lg:mr-3 sm:mb-4 lg:mb-1">
+                        <label for="question_img" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white  w-full">
+                        {% if img != null %}
+                            <img  class="w-full border border-gray-700 rounded" id="output" src="{{asset('uploads/question/' ~ img)}}"/>
+
+                        {% else %}
+                            <img  class="w-full border border-gray-700 rounded" id="output" src="https://placehold.co/600x400"/>
+                        {% endif %}
+                            
+                        </label>
+                        {{ form_widget(form.img,  {  widget_errors_class: 'bg-info-100', widget_class: 'hidden bg-gray-700/5 border border-gray-300 text-gray-700 text-sm rounded outline-none focus:ring-gray-900 focus:border-gray-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500' }) }}
+                    </div> 
+                 </div>
+                <div class="block w-full">
+                    <div class="w-full lg:mr-3 sm:mb-4 lg:mb-1">
+                        <label for="question_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
+                        {{ form_row(form.type,{widget_errors_class: 'bg-info-100', widget_class: 'bg-gray-700/5 border border-gray-300 text-gray-700 text-sm rounded outline-none focus:ring-gray-900 focus:border-gray-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500' }) }}
+                    </div>
+                </div>
+                <div class="block w-full mb-5">
+                    <div class="w-full lg:mr-3 sm:mb-4 lg:mb-1">
+                        <label for="question_question" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question</label>
+                        {{ form_row(form.question,{widget_errors_class: 'bg-info-100', widget_class: 'bg-gray-700/5 border border-gray-300 text-gray-700 text-sm rounded outline-none focus:ring-gray-900 focus:border-gray-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500' }) }}
+                    </div>
+                </div>
+                <div class="flex w-full justify-center">
+                    <button type="submit" class=" text-base  text-white hover:bg-gray-900 bg-gray-700  dark:text-white dark:hover:bg-gray-700 font-medium rounded px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+                        {{button}}
+                    </button>
+                </div>
+                {{ form_rest(form) }}
+            </form>
+        </div>
+    </div>
+</section>
+{{ form_end(form) }}
+
+
+<script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script>

@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter question{% endblock %}
+
+{% block body %}
+
+<section class="container px-4 mx-auto pt-40 mb-20">
+    <div class="flex items-center gap-x-3">
+        <h2 class="text-lg font-medium text-gray-800 dark:text-white">Nombre questions</h2>
+
+        <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{ questions.getTotalItemCount }} question</span>
+    </div>
+
+    <div class="flex flex-col mt-6 ">
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-800">
+                            <tr>
+                                <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <div class="flex items-center gap-x-3">
+                                        <span>Image</span>
+                                    </div>
+                                </th>
+                                <th scope="col" class=" px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <button class="flex items-center gap-x-2">
+                                        <span>Type question</span>
+                                    </button>
+                                </th>
+                                <th scope="col" class=" px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <button class="flex items-center gap-x-2">
+                                        <span>Question</span>
+                                    </button>
+                                </th>
+                                <th scope="col" class="relative py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 flex justify-end">
+                                    <span class="gap-x-2">Edit</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                        {% for question in questions %}
+                            <tr>
+                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                    <div class="inline-flex items-center gap-x-3">
+                                        <div class="flex items-center gap-x-2">
+                                            
+                                            <img class="object-cover w-16 h-16 rounded" src="{{asset('uploads/question/' ~ question.img) }}" alt="">
+                         
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                    <div class="inline-flex items-center gap-x-3">
+                                        <div class="flex items-center gap-x-2">
+                                            <h2 class="font-medium text-gray-800 dark:text-white first-letter:uppercase item-center ">{{question.type}} </h2>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                    <div class="inline-flex items-center gap-x-3">
+                                        <div class="flex items-center gap-x-2">
+                                            <h2 class="font-medium text-gray-800 dark:text-white first-letter:uppercase item-center ">{{question.question}} </h2>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                    <div class="flex items-center gap-x-6  justify-end">
+                                        <a href="{{path('app_edit_question', {id: question.id  | nzo_encrypt})}}">
+                                            <button class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-gray-700 focus:outline-none">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon-lg " viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                                </svg>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="row">
+            <div class="navigation col-12 d-flex justify-content-center">
+                {{ knp_pagination_render(questions, "partials/views/tailwindcss_pagination.html.twig") }}
+            </div>
+        </div>
+
+
+</section>
+
+
+
+
+
+{% endblock %}

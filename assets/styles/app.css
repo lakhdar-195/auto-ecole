@@ -1,3 +1,55 @@
-body {
-    background-color: skyblue;
-}
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
+
+  .sm{
+
+    width: 0.8em;
+    height: 0.8em;
+    vertical-align: -0.125em;
+  }
+  .icon-md{
+
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: 1em;
+  }
+  .icon-lg{
+
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: 1em;
+  }
+  .icon-xl{
+
+    width: 2.5em;
+    height: 2.5em;
+    vertical-align: 2em;
+  }
+
+
+  .icon-5x{
+
+    width: 4.5em;
+    height: 4.5em;
+    vertical-align: 4em;
+  }
+
+  .text-red-700{
+
+    color: red;
+    font-size: 12px;
+  }
+  .text-small{
+
+  
+    font-size: 12px;
+  }
+
