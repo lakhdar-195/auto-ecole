@@ -24,7 +24,7 @@ class Question
     /**
      * @var Collection<int, Response>
      */
-    #[ORM\OneToMany(targetEntity: Response::class, mappedBy: 'question')]
+    #[ORM\OneToMany(targetEntity: Responses::class, mappedBy: 'question')]
     private Collection $responses;
 
     #[ORM\Column(length: 255)]
@@ -72,7 +72,7 @@ class Question
         return $this->responses;
     }
 
-    public function addResponse(Response $response): static
+    public function addResponse(Responses $response): static
     {
         if (!$this->responses->contains($response)) {
             $this->responses->add($response);
@@ -82,7 +82,7 @@ class Question
         return $this;
     }
 
-    public function removeResponse(Response $response): static
+    public function removeResponse(Responses $response): static
     {
         if ($this->responses->removeElement($response)) {
             // set the owning side to null (unless already changed)

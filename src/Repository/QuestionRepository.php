@@ -31,13 +31,36 @@ class QuestionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-       public function findById($value): ?Array
-       {
-           return $this->createQueryBuilder('q')
-               ->andWhere('q.id = :val')
-               ->setParameter('val', $value)
-               ->getQuery()
-               ->getArrayResult()
-           ;
-       }
+    public function findById($value): ?Array
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
+
+
+    public function findByResponse(): ?Array
+    {
+        return $this->createQueryBuilder('q')
+            ->addSelect('q.id')
+            ->addSelect('q.img')
+            ->addSelect('q.type')
+            ->addSelect('q.question')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
+
+    public function findOneById($value): ?Question
+   {
+       return $this->createQueryBuilder('q')
+           ->andWhere('q.id = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 }
