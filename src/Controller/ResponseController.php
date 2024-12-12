@@ -26,19 +26,19 @@ class ResponseController extends AbstractController
         $this->_em = $em;
     }
 
-    #[Route('/add/response', name: 'app_add_response')]
+    // load template to add question and response by react
+    #[Route('/add/response', name: 'app_add_question')]
     public function index(QuestionRepository $qsr): Response
     {
 
-        $questions = $qsr->findByresponse();
-
-
+ 
         return $this->render('response/addResponse.html.twig', [
-            'questions' => $questions,
+            
         ]);
     }
 
 
+    // put question and response by ajax
     #[Route('/put/question', name: 'app_put_question', methods: ["POST", "GET"])]
     public function putQuestion(Request $request, $questionPath, QuestionRepository $qsr): JsonResponse
     {

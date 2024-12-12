@@ -49,6 +49,9 @@ class QuestionRepository extends ServiceEntityRepository
             ->addSelect('q.img')
             ->addSelect('q.type')
             ->addSelect('q.question')
+            ->innerJoin('q.responses', 'r')
+            ->addSelect('r.response')
+            ->addSelect('r.isValid')
             ->getQuery()
             ->getArrayResult()
         ;

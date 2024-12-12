@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Form\QuestionType;
+use App\Services\SortArray;
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -28,48 +29,7 @@ class QuestionController extends AbstractController
 
 
     
-    #[Route('/add/question', name: 'app_add_question')]
-    public function index(Request $req, $questionPath): Response
-    {
 
-        $question = new Question ();
-        $form = $this->createForm(QuestionType::class, $question);
-        $form->handleRequest($req);
-
-        if($form->isSubmitted() and $form->isValid()){
-
-
-            $img = $form->get('img')->getData();
-
-                if ($img) {
-
-                    
-                    $newFilename = uniqid().'.'.$img->guessExtension();
-                    try {
-
-                        $img->move($questionPath, $newFilename);
-                    } catch (FileException $e) {
-                        
-                    }
-                    $question->setImg($newFilename);
-                
-                }
-
-
-            $this->_em->persist($question);
-            $this->_em->flush();
-
-            $this->addFlash('info', 'Question ajouter avec success');
-
-            return $this->redirectToRoute('app_add_question');
-        }
-        
-
-        return $this->render('question/addQuestion.html.twig', [
-            'form' => $form,
-            'img' => null
-        ]);
-    }
 
     #[Route('/edit/question/{id}', name: 'app_edit_question')]
     #[ParamDecryptor(['id'])]
@@ -136,7 +96,12 @@ class QuestionController extends AbstractController
     public function showQuestion (QuestionRepository $qsr, Request $request, PaginatorInterface $paginator): Response 
     {
 
-        $questions = $qsr->findAll();
+        $qs = $qsr->findByResponse();
+        $sort = new SortArray($qs);
+        $questions= $sort->pushArray();
+
+        // dd($questions);
+        
         $pagination = $paginator->paginate(
             $questions, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/

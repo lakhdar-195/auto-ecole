@@ -109,7 +109,7 @@ export default function Response(props) {
         <div className="lg:w-2/5 p-6 bg-white sm:w-full md:w-full  rounded shadow border  dark:bg-gray-700 border-gray-700 sm:p-8">
 
             <div className="w-full text-center mb-5">
-                <h2 className=" text-xl font-bold leading-relaxed tracking-tight text-gray-700 md:text-2xl dark:text-white mb-4">Ajouter des réponses</h2>
+                <h2 className=" text-xl font-bold leading-relaxed tracking-tight text-gray-700 md:text-2xl dark:text-white mb-4">Ajouter une question</h2>
                 <p className="w-3/4 mx-auto leading-relaxed text-base text-gray-600">Personnalisez et mettez à jour les informations de votre profil afin de refléter les changements et de faciliter une expérience adaptée à vos besoins.</p>
             </div>
             
@@ -121,7 +121,7 @@ export default function Response(props) {
                         <label htmlFor="question_img" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white  w-full">
                             <img ref={output} className="w-full border border-gray-700 rounded" id="output" src="https://placehold.co/600x400"/>
                         </label>
-                        <input ref={image} id="question_img" type="file" className="hidden" onChange={handleChange.bind(event)} encType="multipart/form-data" multiple/>
+                        <input ref={image} id="question_img" type="file" className="hidden" onChange={handleChange.bind(event)} encType="multipart/form-data" multiple />
                     </div> 
                  </div>
                 <div className="block w-full">
