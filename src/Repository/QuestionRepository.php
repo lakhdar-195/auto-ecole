@@ -57,13 +57,21 @@ class QuestionRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findOneById($value): ?Question
+    public function findOneById($value): ?Array
    {
        return $this->createQueryBuilder('q')
            ->andWhere('q.id = :val')
            ->setParameter('val', $value)
+           ->addSelect('q.id')
+           ->addSelect('q.img')
+           ->addSelect('q.type')
+           ->addSelect('q.question')
+           ->innerJoin('q.responses', 'r')
+           ->addSelect('r.response')
+           ->addSelect('r.id AS idResp')
+           ->addSelect('r.isValid')
            ->getQuery()
-           ->getOneOrNullResult()
+           ->getArrayResult()
        ;
    }
 }

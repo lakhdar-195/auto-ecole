@@ -5,7 +5,7 @@
 {% block body %}
 
 
-{{ include('partials/views/_question.html.twig', {button : 'Editer', title: 'Editer une question'}) }}
+<div  {{ react_component('UpdateQ', {question: question})}} ></div>
 
 
 {% endblock %}

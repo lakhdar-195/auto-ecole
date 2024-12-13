@@ -3,7 +3,7 @@
 namespace App\Services;
 
 
-class SortArray 
+class SortQuestion
 {
 
     public $_array;
@@ -21,7 +21,6 @@ class SortArray
         
         $i = 0;
         $response = [];
-        $idResp = [];
         $state = [];
 
         for($i = 0; $i < count($this->_array); $i++)
@@ -32,7 +31,6 @@ class SortArray
             if($i < count($this->_array ) - 1 and $this->_array[$i]['id'] == $this->_array[$i + 1]['id']){
 
                 array_push($response, $this->_array[$i]['response']);
-                array_push($idResp, $this->_array[$i]['idResp']);
                 array_push($state, $this->_array[$i]['isValid']);
 
             }elseif( $i < count($this->_array ) - 1 and $this->_array[$i]['id'] != $this->_array[$i + 1]['id']){
@@ -43,8 +41,6 @@ class SortArray
                 $_array += ['question' => $this->_array[$i]['question']];
                 array_push($response, $this->_array[$i]['response']);
                 $_array += ['response' => $response];
-                array_push($idResp, $this->_array[$i]['idResp']);
-                $_array += ['idResp' => $idResp];
 
                 array_push($state, $this->_array[$i]['isValid']);
                 $_array += ['state' => $state];
@@ -58,8 +54,6 @@ class SortArray
                 $_array += ['question' => $this->_array[$i]['question']];
                 array_push($response, $this->_array[$i]['response']);
                 $_array += ['response' => $response];
-                array_push($idResp, $this->_array[$i]['idResp']);
-                $_array += ['idResp' => $idResp];
 
                 array_push($state, $this->_array[$i]['isValid']);
                 $_array += ['state' => $state];
@@ -69,13 +63,11 @@ class SortArray
             if($i < count($this->_array ) - 1 and $this->_array[$i]['id'] != $this->_array[$i + 1]['id']){
 
                 $response = [];
-                $idResp = [];
                 $state= [];
             }
             if($i == count($this->_array ) - 1 ){
 
                 $response = [];
-                $idResp = [];
                 $state= [];
             }
 
