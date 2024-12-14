@@ -74,4 +74,23 @@ class QuestionRepository extends ServiceEntityRepository
            ->getArrayResult()
        ;
    }
+
+
+   public function findByType($value): ?Array
+  {
+      return $this->createQueryBuilder('q')
+          ->andWhere('q.type = :val')
+          ->setParameter('val', $value)
+          ->addSelect('q.id')
+          ->addSelect('q.img')
+          ->addSelect('q.type')
+          ->addSelect('q.question')
+          ->innerJoin('q.responses', 'r')
+          ->addSelect('r.response')
+          ->addSelect('r.id AS idResp')
+          ->addSelect('r.isValid')
+          ->getQuery()
+          ->getArrayResult()
+      ;
+  }
 }

@@ -110,7 +110,6 @@ export default function Response(props) {
 
             <div className="w-full text-center mb-5">
                 <h2 className=" text-xl font-bold leading-relaxed tracking-tight text-gray-700 md:text-2xl dark:text-white mb-4">Ajouter une question</h2>
-                <p className="w-3/4 mx-auto leading-relaxed text-base text-gray-600">Personnalisez et mettez à jour les informations de votre profil afin de refléter les changements et de faciliter une expérience adaptée à vos besoins.</p>
             </div>
             
             <form  className="mt-4 space-y-4 lg:mt-5 md:space-y-5" method="post">

@@ -134,9 +134,8 @@ export default function UpdateQ(props) {
     <div className=" flex flex-col items-center justify-start px-6 py-1 mx-auto md:h-screen lg:py-0">
         <div className="lg:w-2/5 p-6 bg-white sm:w-full md:w-full  rounded shadow border  dark:bg-gray-700 border-gray-700 sm:p-8">
 
-            <div className="w-full text-center mb-5">
-                <h2 className=" text-xl font-bold leading-relaxed tracking-tight text-gray-700 md:text-2xl dark:text-white mb-4">Ajouter une question</h2>
-                <p className="w-3/4 mx-auto leading-relaxed text-base text-gray-600">Personnalisez et mettez à jour les informations de votre profil afin de refléter les changements et de faciliter une expérience adaptée à vos besoins.</p>
+            <div className="w-full text-center mb-10">
+                <h2 className=" text-xl font-bold leading-relaxed tracking-tight text-gray-700 md:text-2xl dark:text-white mb-10">Editer une question</h2>
             </div>
             
             <form  className="mt-4 space-y-4 lg:mt-5 md:space-y-5" method="post">
