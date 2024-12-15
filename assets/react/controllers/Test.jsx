@@ -1,24 +1,37 @@
 import React from 'react'
 import {useRef, useState, useEffect} from 'react'
-import Switcher from '../components/Switcher'
+import Checker from '../components/Checker'
 
 export default function Test(props) {
 
-    const response_1 = useRef();
-    const response_2 = useRef();
-    const response_3 = useRef();
+    //nombre de question
+    let nbq = 40;
+    let time = 1000 * 20;
+
+    const button = useRef(null);
+
+
+
 
     const [count, setCount] = useState(0);
-    const [counter, setCounter] = useState(0);
-    const [taber, setTaber] = useState(0);
 
+    const [first, setFirst] = useState(false);
+    const [second, setSecond] = useState(false);
+    const [third, setThird] = useState(false);
+    
+    //result of questions
     const res = props.res;
+    localStorage.setItem('result', JSON.stringify(res));
+    
     let result = res[count];
-
+    
+   
 
     const [dataFirst, setDataFirst] = useState('');
     const [dataSecond, setDataSecond] = useState('');
     const [dataThird, setDataThird] = useState('');
+
+    const [response, setResponse] = useState([]);
 
     const handleFirst = (data) => {
 
@@ -29,6 +42,7 @@ export default function Test(props) {
         }else{
 
             setDataFirst(data);
+            setFirst(data)
         }
         
             };
@@ -39,6 +53,7 @@ export default function Test(props) {
         }else{
 
             setDataSecond(data);
+            setSecond(data)
             
         }
             };
@@ -49,16 +64,165 @@ export default function Test(props) {
         }else{
 
             setDataThird(data);
+            setThird(data)
         }
             };
 
+
+
+   
+    useEffect(()=>{
+
+       
+       
+        if(count > (nbq-1)){
+
+                
+            score();
+
+            localStorage.setItem('type_1', JSON.stringify(typeScore('Les règles de circulation')))
+            localStorage.setItem('type_2', JSON.stringify(typeScore('La sécurité routière')))
+            localStorage.setItem('type_3', JSON.stringify(typeScore('La mécanique et l’entretien')))
+            localStorage.setItem('type_4', JSON.stringify(typeScore('Les situations pratiques')))
+            localStorage.setItem('type_5', JSON.stringify(typeScore('Les règles spécifiques')))
+            localStorage.setItem('type_6', JSON.stringify(typeScore('Le comportement du conducteur')))
+        }
+            
+    }, [count, setter])
+
+ 
+    const [setter, setSetter] = useState(0);
+    const [set, setSet] = useState(0);
+
+    let timerId = null
+    const timer = ()=>{
+
+        timerId = setTimeout(() => {
+
+           
+
+            setSetter(setter + 1)
+            
+            if(setter >= 20){
+                setSetter(0)
+            }
+
+            
+        }, 1000);
+    }
+
+    useEffect(()=>{
+
+        if(setter >= 20){
+            button.current.click();
+        }
+
+        console.log(setter)
+
+        timer();
+        
+    }, [setter])
+
+  
+
+
+
+    // push responses object in array
     const handleValid = ()=>{
 
 
-        setCount(count+1);
+        clearTimeout(timerId)
+        setSetter(0);
         result = res[count];
-                
-            };
+        const newResponse = {id: result.id, idResp: result.idResp, img: result.img, question: result.question, response: result.response, state: [dataFirst, dataSecond, dataThird], type: result.type};
+        setResponse([...response, newResponse]);
+
+        setCount(count+1);
+
+        setFirst(false)
+        setSecond(false)
+        setThird(false)
+     
+    };
+
+
+
+    //get score by type of question 
+    const typeScore = (type )=>{
+
+        let i = 0;
+        let sc = 0;
+        let numberQuestion = 0;
+
+        for(i = 0; i < response.length; i++){
+
+            numberQuestion += 1;
+
+            let s = 0;
+
+            let score = 0;
+            for(s = 0; s < 3; s++)
+            {
+
+                if( response[i].state[s] == res[i].state[s] && response[i].type == type )
+                {
+
+                    score += 1;
+                }
+
+            }
+
+            if(score == 3){
+
+                sc += 1
+            }
+        }
+
+        let tab = [type, sc, numberQuestion]
+
+        return tab;
+    }
+
+
+
+    // get score
+    const score = ()=>{
+
+        let i = 0;
+        let sc = 0;
+        
+
+        for(i = 0; i < response.length; i++){
+
+            let s = 0;
+            let score = 0;
+
+            for(s = 0; s < 3; s++)
+            {
+                if(response[i].state[s] == res[i].state[s])
+                {
+
+                    score += 1;
+                }
+
+            }
+
+            if(score == 3){
+
+                sc += 1
+            }
+        }
+
+        localStorage.setItem('score', sc);
+        sendToResult()
+    }
+
+    const sendToResult =  ()=>{
+
+        localStorage.setItem('response', JSON.stringify(response));
+        location.href = '/result';
+
+    }
 
 
 
@@ -70,10 +234,10 @@ export default function Test(props) {
         <div className="lg:w-2/5 p-6 bg-white sm:w-full md:w-full  rounded shadow border  dark:bg-gray-700 border-gray-700 sm:p-8">
 
             <div className="w-full text-center mb-10">
-                <h2 className=" text-xl font-bold leading-relaxed tracking-tight text-gray-700 md:text-2xl dark:text-white mb-10">Editer une question</h2>
+                <h2 className=" text-xl font-bold leading-relaxed tracking-tight text-gray-700 md:text-2xl dark:text-white mb-10">Question n:° {count + 1}</h2>
             </div>
             
-            <form  className="mt-4 space-y-4 lg:mt-5 md:space-y-5" method="post">
+ 
 
 
             <div className="mb-4">
@@ -83,14 +247,18 @@ export default function Test(props) {
                         </label>
                     </div> 
                  </div>
-                <div className="block w-full">
-                    <div className="w-full lg:mr-3 sm:mb-4 lg:mb-1"> 
-                        {result.type}
+                <div className="flex w-full">
+                    <div className="w-3/4 block lg:mr-3 sm:mb-4 lg:mb-1"> 
+                        <div>{result.type} </div>
+                        <div>{result.question}</div>
+                     </div>
+                     <div className="w-1/4 items-center text-center">
+                        <p className="text-4xl font-bold">{setter}/20</p> 
                      </div>
                 </div>
                 <div className="block w-full">
                     <div className="w-full lg:mr-3 sm:mb-4 lg:mb-1">
-                       {result.question}
+                       
                     </div>
                 </div>
                 <div className="block w-full mb-5">
@@ -100,7 +268,7 @@ export default function Test(props) {
                             <div className="bg-gray-700/5 border border-gray-300 text-gray-700 text-sm rounded outline-none focus:ring-gray-900 focus:border-gray-700 block w-3/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500">
                                 {result.response[0]}
                             </div>
-                            <Switcher className="w-1/4" sendDataToParent={handleFirst}  />
+                            <Checker className="w-1/4" sendDataToParent={handleFirst} _data={first} />
                         </div>
                      
                      </div>
@@ -113,7 +281,7 @@ export default function Test(props) {
                             <div className="bg-gray-700/5 border border-gray-300 text-gray-700 text-sm rounded outline-none focus:ring-gray-900 focus:border-gray-700 block w-3/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500">
                                 {result.response[1]}
                             </div>
-                            <Switcher className="w-1/4" sendDataToParent={handleSecond}  />
+                            <Checker className="w-1/4" sendDataToParent={handleSecond} _data={second} />
                         </div>
                      
                      </div>
@@ -125,18 +293,17 @@ export default function Test(props) {
                             <div className="bg-gray-700/5 border border-gray-300 text-gray-700 text-sm rounded outline-none focus:ring-gray-900 focus:border-gray-700 block w-3/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500">
                                 {result.response[2]}
                             </div>
-                            <Switcher className="w-1/4" sendDataToParent={handleThird} />
+                            <Checker className="w-1/4" sendDataToParent={handleThird} _data={third} />
                         </div>
                      
                      </div>
                 </div>
                 <div className="flex w-full justify-center">
-                    <button type="submit" onClick={handleValid}className=" text-base  text-white hover:bg-gray-900 bg-gray-700  dark:text-white dark:hover:bg-gray-700 font-medium rounded px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+                    <button type="submit" onClick={handleValid} ref={button} className=" text-base  text-white hover:bg-gray-900 bg-gray-700  dark:text-white dark:hover:bg-gray-700 font-medium rounded px-4 py-2.5 duration-300 transition-colors focus:outline-none">
                         Envoyer
                     </button>
                 </div>
-            
-            </form>
+
         </div>
     </div>
 </section>

@@ -2,27 +2,23 @@ import React from 'react'
 import {useState, useEffect} from 'react'
 
 
-export default function Checkbox({_data, sendDataToParent }) {
+export default function Checker({_data, sendDataToParent }) {
 
 
     const [isChecked, setIsChecked] = useState(true)
-    const [count, setCount] = useState(0);
 
 
-    useEffect(()=>{
+    useEffect(() => {
 
-      sendDataToParent(_data);
-      setIsChecked(!_data)
+        sendDataToParent(_data);
+        setIsChecked(!_data)
 
+    }, [_data]); 
 
-
-      console.log(_data)
-
-    }, [])
 
     const handleCheckboxChange = (event) => {
 
-     
+    
       setIsChecked(!isChecked)
       sendDataToParent(isChecked);
     }

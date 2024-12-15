@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Services\Randq;
 use App\Services\SortArray;
 use App\Repository\QuestionRepository;
+use PhpParser\NodeVisitor\NameResolver;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,5 +58,13 @@ class TestController extends AbstractController
         return $this->render('test/index.html.twig', [
             'res'=> $res,
         ]);
+    }
+
+    #[Route('/result', name:'app_result')]
+    public function result():Response
+    {
+
+
+        return $this->render('test/result.html.twig');
     }
 }
