@@ -185,13 +185,13 @@ export default function Result() {
         </div>
 
         <hr className="my-8 border-gray-200 dark:border-gray-700" />
-        <div className="mb-4">
-            <span>{type_1[0]} : {type_1[1]} /{type_1[2]}</span>
-            <span>{type_2[0]} : {type_2[1]} /{type_2[2]}</span>
-            <span>{type_3[0]} : {type_3[1]} /{type_3[2]}</span>
-            <span>{type_4[0]} : {type_4[1]} /{type_4[2]}</span>
-            <span>{type_5[0]} : {type_5[1]} /{type_5[2]}</span>
-            <span>{type_6[0]} : {type_6[1]} /{type_6[2]}</span>
+        <div className="mb-4 block">
+            <div>{type_1[0]} : {type_1[1]} /{type_1[2]}</div>
+            <div>{type_2[0]} : {type_2[1]} /{type_2[2]}</div>
+            <div>{type_3[0]} : {type_3[1]} /{type_3[2]}</div>
+            <div>{type_4[0]} : {type_4[1]} /{type_4[2]}</div>
+            <div>{type_5[0]} : {type_5[1]} /{type_5[2]}</div>
+            <div>{type_6[0]} : {type_6[1]} /{type_6[2]}</div>
         </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4">
 

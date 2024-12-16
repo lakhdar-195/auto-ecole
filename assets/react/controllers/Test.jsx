@@ -164,8 +164,10 @@ export default function Test(props) {
 
         for(i = 0; i < response.length; i++){
 
-            numberQuestion += 1;
+            if(response[i].type == type ){
 
+                numberQuestion += 1;
+            }
             let s = 0;
 
             let score = 0;
@@ -184,11 +186,13 @@ export default function Test(props) {
 
                 sc += 1
             }
+            
         }
 
-        let tab = [type, sc, numberQuestion]
+        
+            let tab = [type, sc, numberQuestion]
+            return tab;
 
-        return tab;
     }
 
 
