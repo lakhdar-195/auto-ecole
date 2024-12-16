@@ -164,7 +164,10 @@ export default function Test(props) {
 
         for(i = 0; i < response.length; i++){
 
-            numberQuestion += 1;
+            if(response[i].type == type ){
+
+                numberQuestion += 1;
+            }
 
             let s = 0;
 
