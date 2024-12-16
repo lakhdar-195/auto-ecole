@@ -4,5 +4,5 @@ change type question in
     - Test.jsx
     - TestController.php
 
-change tmer of response in 
-    -Test.jsx
+change timer of response in 
+    - Test.jsx
