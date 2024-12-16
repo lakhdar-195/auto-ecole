@@ -6,7 +6,9 @@ export default function Test(props) {
 
     //nombre de question
     let nbq = 40;
-    let time = 1000 * 20;
+    // nombre de seconde
+    let seconde = 30;
+    let time = 10 * seconde;
 
     const button = useRef(null);
 
@@ -92,32 +94,37 @@ export default function Test(props) {
 
  
     const [setter, setSetter] = useState(0);
-    const [set, setSet] = useState(0);
+    const [counter, setCounter] = useState(0);
 
     let timerId = null
     const timer = ()=>{
 
         timerId = setTimeout(() => {
 
-           
+
 
             setSetter(setter + 1)
+
+
+                setCounter(Math.floor(setter / 10))
+
             
-            if(setter >= 20){
+            if(setter >= time){
                 setSetter(0)
+                setCounter(0)
             }
 
             
-        }, 1000);
+        }, 100);
     }
 
     useEffect(()=>{
 
-        if(setter >= 20){
+        if(setter >= time){
             button.current.click();
         }
 
-        console.log(setter)
+
 
         timer();
         
@@ -130,9 +137,10 @@ export default function Test(props) {
     // push responses object in array
     const handleValid = ()=>{
 
-
         clearTimeout(timerId)
+        console.log(timerId)
         setSetter(0);
+        setCounter(0)
         result = res[count];
         const newResponse = {id: result.id, idResp: result.idResp, img: result.img, question: result.question, response: result.response, state: [dataFirst, dataSecond, dataThird], type: result.type};
         setResponse([...response, newResponse]);
@@ -253,7 +261,7 @@ export default function Test(props) {
                         <div>{result.question}</div>
                      </div>
                      <div className="w-1/4 items-center text-center">
-                        <p className="text-4xl font-bold">{setter}/20</p> 
+                        <p className="text-4xl font-bold">{counter}/{seconde}</p> 
                      </div>
                 </div>
                 <div className="block w-full">

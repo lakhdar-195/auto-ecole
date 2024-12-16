@@ -15,6 +15,8 @@ class TestController extends AbstractController
     #[Route('/test', name: 'app_test')]
     public function index(QuestionRepository $qsr): Response
     {
+
+        // declare type question in variable
         $theme_1 = "Les règles de circulation";
         $theme_2 = "La sécurité routière";
         $theme_3 = "La mécanique et l’entretien";
@@ -22,6 +24,7 @@ class TestController extends AbstractController
         $theme_5 = "Les règles spécifiques";
         $theme_6 = "Le comportement du conducteur";
 
+        //find question by type
         $res_1 = $qsr->findByType($theme_1);
         $res_2 = $qsr->findByType($theme_2);
         $res_3 = $qsr->findByType($theme_3);
@@ -29,6 +32,7 @@ class TestController extends AbstractController
         $res_5 = $qsr->findByType($theme_5);
         $res_6 = $qsr->findByType($theme_6);
 
+        // get question and choice on search in array result
         $sort_1 = new SortArray($res_1);
         $_res_1 = $sort_1->pushArray();
         
@@ -48,8 +52,11 @@ class TestController extends AbstractController
         $_res_6 = $sort_6->pushArray();
 
 
+        //push all in array 
         $tab = [$_res_1, $_res_2, $_res_3, $_res_4, $_res_5, $_res_6];
 
+
+        // get question by randon
         $rd = new Randq();
         $res = $rd->index($tab);
 
